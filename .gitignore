@@ -1,0 +1,7 @@
+*.class
+.classpath
+
+tool.jar
+bin/*
+doc/*
+junit/*

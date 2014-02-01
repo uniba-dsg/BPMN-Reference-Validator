@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="BPMN-Referenztypvalidierer">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="C:/Program Files/eclipse 4.2"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="docdir" value="doc"/>
+    <property name="srcdir" value="src"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.junit_4.10.0.v4_10_0_v20120426-0900/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+    </path>
+    <path id="BPMN-Referenztypvalidierer.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/jdom-2.0.4.jar"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+    	<pathelement location="bpmn-xsd"/>
+    	<pathelement location="lang"/>
+    	<pathelement location="references"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="${srcdir}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall">
+    	<delete dir="junit" />
+    </target>
+    <target depends="build-project" name="build"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="${srcdir}"/>
+            <classpath refid="BPMN-Referenztypvalidierer.classpath"/>
+        </javac>
+    </target>
+    <target name="run">
+        <java classname="de.uniba.wiai.lspi.ws1213.ba.Main" failonerror="true" fork="yes">
+            <classpath refid="BPMN-Referenztypvalidierer.classpath"/>
+        </java>
+    </target>
+    <target name="test">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="de.uniba.wiai.lspi.ws1213.ba.test.TestBPMNFiles" todir="${junit.output.dir}"/>
+            <classpath refid="BPMN-Referenztypvalidierer.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport" depends="test">
+		<mkdir dir="${junit.output.dir}"/>
+		<junitreport todir="${junit.output.dir}">
+	            <fileset dir="${junit.output.dir}">
+	                <include name="TEST-*.xml"/>
+	            </fileset>
+	            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+	<target name="create_run_jar" depends="build">
+        <jar destfile="tool.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="de.uniba.wiai.lspi.ws1213.ba.Main"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+        	<!-- Copy needed files -->
+            <fileset dir="bin"/>
+	    	<fileset dir="bpmn-xsd"/>
+		    <fileset dir="lang"/>
+			<fileset dir="references"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/jdom-2.0.4.jar"/>
+        </jar>
+    </target>
+  	<target name="doc" depends="build">
+		<!-- clean the documentation dir. create it first for the case it does not exist -->
+		<mkdir dir="${docdir}" />
+		<delete verbose="Off" includeEmptyDirs="true">
+			<fileset dir="${docdir}/" />
+		</delete>
+		<mkdir dir="${docdir}" />
+		<!-- create documentation -->
+		<javadoc packagenames="de.uniba.wiai.lspi.ws1213.ba.*" sourcepath="${srcdir}" destdir="${docdir}" author="true" version="true" windowtitle="${ant.project.name} - Documentation" useexternalfile="true">
+			<classpath>
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+					<include name="**/*.zip" />
+				</fileset>
+				<!-- path to junit jar -->
+				<fileset dir="${ECLIPSE_HOME}/plugins">
+					<include name="**/*.jar" />
+					<include name="**/*.zip" />
+				</fileset>
+			</classpath>
+		</javadoc>
+	</target>
+</project>
