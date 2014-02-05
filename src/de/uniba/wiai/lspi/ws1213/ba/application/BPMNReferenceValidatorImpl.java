@@ -549,6 +549,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	 * @return the identified absolute path
 	 */
 	private String identifyPath(String location) {
+		// TODO check/refactor to platform independency
 		String path = "";
 		if (location.startsWith("\\") || location.startsWith("/")) {
 			location = location.substring(1);
@@ -568,7 +569,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 				path = checkRelativPath(location, pathElements);
 			}
 		} else {
-			path = bpmnFile.getParent() + "\\" + location;
+			path = bpmnFile.getParent() + File.separator + location;
 		}
 
 		return path;
@@ -586,6 +587,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	 * @return the absolute path
 	 */
 	private String checkRelativPath(String location, String[] pathElements) {
+		// TODO check/refactor to platform independency
 		String path = "";
 		String[] pathBPMNFile = bpmnFile.getParent().split("\\\\");
 		int number = -1;
