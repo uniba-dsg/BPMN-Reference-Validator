@@ -5,10 +5,3 @@ bin/
 .gradle/
 .settings/
 build/
-results.csv
-assertions.tex
-r-results.csv
-*-report.xml
-*.iml
-*.ipr
-*iws
