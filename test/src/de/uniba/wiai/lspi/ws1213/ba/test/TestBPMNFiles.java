@@ -44,7 +44,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT1() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-1-gruppe-c.bpmn");
+				.validate("test/tests/test-1-gruppe-c.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -67,7 +67,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT2() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-2-gruppe-d.bpmn");
+				.validate("test/tests/test-2-gruppe-d.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -89,7 +89,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT3() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-3-gruppe-e.bpmn");
+				.validate("test/tests/test-3-gruppe-e.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -116,7 +116,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT4() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-4-gruppe-f.bpmn");
+				.validate("test/tests/test-4-gruppe-f.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -143,7 +143,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT5() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-5-gruppe-g.bpmn");
+				.validate("test/tests/test-5-gruppe-g.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -166,7 +166,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT6() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-6-gruppe-h.bpmn");
+				.validate("test/tests/test-6-gruppe-h.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -189,7 +189,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT7() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-7-gruppe-i1.bpmn");
+				.validate("test/tests/test-7-gruppe-i1.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -216,7 +216,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT8() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-8-gruppe-l.bpmn");
+				.validate("test/tests/test-8-gruppe-l.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -239,7 +239,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT9() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-9-gruppe-m.bpmn");
+				.validate("test/tests/test-9-gruppe-m.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -262,7 +262,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT10() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-10-gruppe-n.bpmn");
+				.validate("test/tests/test-10-gruppe-n.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -285,7 +285,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT11() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-11-gruppe-o.bpmn");
+				.validate("test/tests/test-11-gruppe-o.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -314,7 +314,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT12() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-12-gruppe-p.bpmn");
+				.validate("test/tests/test-12-gruppe-p.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -338,7 +338,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT13() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-13-gruppe-q.bpmn");
+				.validate("test/tests/test-13-gruppe-q.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -361,7 +361,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT14() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-14-gruppe-r.bpmn");
+				.validate("test/tests/test-14-gruppe-r.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -388,7 +388,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT15() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-15-gruppe-s.bpmn");
+				.validate("test/tests/test-15-gruppe-s.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -411,7 +411,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT16() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-16-gruppe-t.bpmn");
+				.validate("test/tests/test-16-gruppe-t.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -434,7 +434,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT17() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-17-gruppe-u.bpmn");
+				.validate("test/tests/test-17-gruppe-u.bpmn");
 		assertEquals(1, results.size());
 		ValidationResult result = results.get(0);
 		assertFalse(result.isValid());
@@ -457,7 +457,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT18() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-18-referenz-6-teil-2.bpmn");
+				.validate("test/tests/test-18-referenz-6-teil-2.bpmn");
 		assertEquals(2, results.size());
 		ValidationResult result1 = results.get(0);
 		assertFalse(result1.isValid());
@@ -481,7 +481,7 @@ public class TestBPMNFiles {
 	@Test
 	public void testValidateWithT19() throws ValidatorException {
 		List<ValidationResult> results = application
-				.validate("tests/test-19-referenz-6-korrekt.bpmn");
+				.validate("test/tests/test-19-referenz-6-korrekt.bpmn");
 		assertEquals(2, results.size());
 		assertTrue(results.get(0).isValid());
 		assertTrue(results.get(1).isValid());

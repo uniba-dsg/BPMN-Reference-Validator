@@ -1,0 +1,47 @@
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "eclipse"
+apply plugin: "application"
+
+mainClassName = "de.uniba.wiai.lspi.ws1213.ba.Main"
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src'
+		}
+		resources {
+			srcDir 'resources'
+		}
+	}
+	test {
+		java {
+			srcDir 'test/src'
+		}
+		resources {
+			srcDir 'test/tests'
+		}
+	}
+}
+
+dependencies {
+	compile 'org.jdom:jdom2:2.0.5'
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.10'
+}
+
+jar {
+   from ( configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } ) {
+   	    exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+   }
+   manifest { attributes 'Main-Class': mainClassName }
+}
