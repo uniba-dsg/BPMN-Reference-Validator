@@ -79,6 +79,11 @@ validator.xsd.general.part1=While the XSD validation of the '
 validator.xsd.general.part2=' file the following errors occurred:
 validator.xsd.sax=Problems occurred while schema validating the file 
 
+#FileImporter
+importer.path.notempty.notnull=Invalid Path. The path must not be null or empty.
+importer.path.invalid=Invalid Path:
+importer.path.notexistentOrDir=The File must exist and must not be a directory.
+
 # BPMNElement
 bpmnelement.references=references: 
 

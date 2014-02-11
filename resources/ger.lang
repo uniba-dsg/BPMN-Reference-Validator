@@ -79,6 +79,11 @@ validator.xsd.general.part1=Während der XSD-Validierung der Datei '
 validator.xsd.general.part2=' sind die folgenden Fehler aufgetreten:
 validator.xsd.sax=Es sind Probleme bei der Schemavalidierung aufgetreten bei der Datei 
 
+#FileImporter
+importer.path.notempty.notnull=Ungültiger Pfad. Der Pfad darf nicht null oder leer sein.
+importer.path.invalid=Ungültiger Pfad:
+importer.path.notexistentOrDir=Die Datei muss vorhanden und darf kein Verzeichnis sein.
+
 # BPMNElement
 bpmnelement.references=Referenzen: 
 
