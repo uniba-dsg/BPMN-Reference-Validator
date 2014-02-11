@@ -473,6 +473,55 @@ public class TestBPMNFiles {
 	/**
 	 * Test method for
 	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * with T18 using a reference to a Subfolder.
+	 * 
+	 * @throws ValidatorException
+	 * 
+	 */
+	@Test
+	public void testValidateWithT18Subfolder() throws ValidatorException {
+		List<ValidationResult> results = application
+				.validate("test/tests/test-18-referenz-6-teil-2-subfolder.bpmn");
+		assertEquals(2, results.size());
+		ValidationResult result1 = results.get(0);
+		assertFalse(result1.isValid());
+		List<Violation> errors = result1.getViolations();
+		assertEquals(1, errors.size());
+		TypeViolation foundError = (TypeViolation) errors.get(0);
+		TypeViolation expectedError = new TypeViolation("group", 10,
+				"categoryValueRef", "participant", null, null);
+		assertEquals(expectedError, foundError);
+		assertTrue(results.get(1).isValid());
+	}
+	
+//	commented out as absolute path is system dependent
+//	/**
+//	 * Test method for
+//	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+//	 * with T18 using a reference with an absolute path.
+//	 * 
+//	 * @throws ValidatorException
+//	 * 
+//	 */
+//	@Test
+//	public void testValidateWithT18Absolute() throws ValidatorException {
+//		List<ValidationResult> results = application
+//				.validate("test/tests/test-18-referenz-6-teil-2-absolute.bpmn");
+//		assertEquals(2, results.size());
+//		ValidationResult result1 = results.get(0);
+//		assertFalse(result1.isValid());
+//		List<Violation> errors = result1.getViolations();
+//		assertEquals(1, errors.size());
+//		TypeViolation foundError = (TypeViolation) errors.get(0);
+//		TypeViolation expectedError = new TypeViolation("group", 10,
+//				"categoryValueRef", "participant", null, null);
+//		assertEquals(expectedError, foundError);
+//		assertTrue(results.get(1).isValid());
+//	}
+	
+	/**
+	 * Test method for
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T19.
 	 * 
 	 * @throws ValidatorException
