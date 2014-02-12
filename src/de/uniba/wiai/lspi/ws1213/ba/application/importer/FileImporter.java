@@ -96,7 +96,7 @@ public class FileImporter {
 			if (processImports) {
 				List<String> processedFiles = new ArrayList<>();
 				processedFiles.add(baseFile.getAbsolutePath());
-				return new ProcessFileSet(baseDoc, processImports(baseDoc,
+				return new ProcessFileSet(baseDoc, processImports(baseDoc, baseFile.toPath(),
 						processedFiles));
 			} else {
 				return new ProcessFileSet(baseDoc, null);
@@ -135,7 +135,7 @@ public class FileImporter {
 		return baseFile;
 	}
 
-	private Map<String, List<Document>> processImports(Document baseDoc,
+	private Map<String, List<Document>> processImports(Document baseDoc, Path baseDocPath,
 			List<String> processedFiles) throws ValidatorException {
 		Map<String, List<Document>> resolvedFiles = new HashMap<>();
 		Element rootNode = baseDoc.getRootElement();
@@ -151,13 +151,11 @@ public class FileImporter {
 			if (element.getName().equals("import")) {
 				String path = element.getAttributeValue("location");
 
-				Path baseFile = Paths.get(baseDoc.getBaseURI().replaceFirst(
-						"file:/", ""));
 
 				// Navigate from the folder containing the baseFile
 				// (baseFile.getParent()) to the given location and
 				// normalize the result
-				String absPath = baseFile.getParent().resolve(Paths.get(path))
+				String absPath = baseDocPath.getParent().resolve(Paths.get(path))
 						.normalize().toString();
 				File file = checkPathAndCreateFile(absPath);
 				if (!processedFiles.contains(file.getAbsolutePath())) {
@@ -169,7 +167,7 @@ public class FileImporter {
 							Document bpmnDoc = builder.build(file);
 							processedFiles.add(file.getAbsolutePath());
 							resolvedBpmnFiles.add(bpmnDoc);
-							Map<String, List<Document>> processResults = processImports(bpmnDoc, processedFiles);
+							Map<String, List<Document>> processResults = processImports(bpmnDoc, file.toPath(), processedFiles);
 							resolvedBpmnFiles.addAll(processResults.get(ProcessFileSet.BPMN2_NAMESPACE));
 							resolvedWsdlFiles.addAll(processResults.get(ProcessFileSet.WSDL_NAMESPACE));
 							resolvedXsdFiles.addAll(processResults.get(ProcessFileSet.XSD_NAMESPACE));
@@ -238,25 +236,23 @@ public class FileImporter {
 							new StreamSource(getClass().getResourceAsStream(
 									"/BPMN20.xsd")) });
 			Validator validator = schema.newValidator();
-			// validator.setErrorHandler(new
-			// XSDValidationLoggingErrorHandler());
 			validator.validate(new StreamSource(file));
 			if (XSDErrorList.size() > 0) {
-				String xsdErroText = language
+				String xsdErrorText = language
 						.getProperty("validator.xsd.general.part1")
 						+ file.getName()
 						+ language.getProperty("validator.xsd.general.part2")
 						+ System.lineSeparator();
 				;
 				for (SAXParseException saxParseException : XSDErrorList) {
-					xsdErroText = xsdErroText
+					xsdErrorText = xsdErrorText
 							+ language.getProperty("loader.xsd.error.part1")
 							+ saxParseException.getLineNumber() + " "
 							+ language.getProperty("loader.xsd.error.part2")
 							+ saxParseException.getMessage()
 							+ System.lineSeparator();
 				}
-				throw new ValidatorException(xsdErroText);
+				throw new ValidatorException(xsdErrorText);
 			}
 		} catch (SAXException e) {
 			throw new ValidatorException(
