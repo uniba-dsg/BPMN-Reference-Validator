@@ -96,8 +96,8 @@ public class FileImporter {
 			if (processImports) {
 				List<String> processedFiles = new ArrayList<>();
 				processedFiles.add(baseFile.getAbsolutePath());
-				return new ProcessFileSet(baseDoc, processImports(baseDoc, baseFile.toPath(),
-						processedFiles));
+				return new ProcessFileSet(baseDoc, processImports(baseDoc,
+						baseFile.toPath(), processedFiles));
 			} else {
 				return new ProcessFileSet(baseDoc, null);
 			}
@@ -135,8 +135,9 @@ public class FileImporter {
 		return baseFile;
 	}
 
-	private Map<String, List<Document>> processImports(Document baseDoc, Path baseDocPath,
-			List<String> processedFiles) throws ValidatorException {
+	private Map<String, List<Document>> processImports(Document baseDoc,
+			Path baseDocPath, List<String> processedFiles)
+			throws ValidatorException {
 		Map<String, List<Document>> resolvedFiles = new HashMap<>();
 		Element rootNode = baseDoc.getRootElement();
 		Filter<Element> filter = Filters.element();
@@ -151,12 +152,11 @@ public class FileImporter {
 			if (element.getName().equals("import")) {
 				String path = element.getAttributeValue("location");
 
-
 				// Navigate from the folder containing the baseFile
 				// (baseFile.getParent()) to the given location and
 				// normalize the result
-				String absPath = baseDocPath.getParent().resolve(Paths.get(path))
-						.normalize().toString();
+				String absPath = baseDocPath.getParent()
+						.resolve(Paths.get(path)).normalize().toString();
 				File file = checkPathAndCreateFile(absPath);
 				if (!processedFiles.contains(file.getAbsolutePath())) {
 					if (ProcessFileSet.BPMN2_NAMESPACE.equals(element
@@ -167,11 +167,15 @@ public class FileImporter {
 							Document bpmnDoc = builder.build(file);
 							processedFiles.add(file.getAbsolutePath());
 							resolvedBpmnFiles.add(bpmnDoc);
-							Map<String, List<Document>> processResults = processImports(bpmnDoc, file.toPath(), processedFiles);
-							resolvedBpmnFiles.addAll(processResults.get(ProcessFileSet.BPMN2_NAMESPACE));
-							resolvedWsdlFiles.addAll(processResults.get(ProcessFileSet.WSDL_NAMESPACE));
-							resolvedXsdFiles.addAll(processResults.get(ProcessFileSet.XSD_NAMESPACE));
-							
+							Map<String, List<Document>> processResults = processImports(
+									bpmnDoc, file.toPath(), processedFiles);
+							resolvedBpmnFiles.addAll(processResults
+									.get(ProcessFileSet.BPMN2_NAMESPACE));
+							resolvedWsdlFiles.addAll(processResults
+									.get(ProcessFileSet.WSDL_NAMESPACE));
+							resolvedXsdFiles.addAll(processResults
+									.get(ProcessFileSet.XSD_NAMESPACE));
+
 						} catch (JDOMException e) {
 							String errorText = language
 									.getProperty("validator.jdom.imported.part1")
