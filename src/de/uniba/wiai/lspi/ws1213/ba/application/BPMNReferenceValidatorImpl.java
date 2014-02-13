@@ -3,6 +3,10 @@ package de.uniba.wiai.lspi.ws1213.ba.application;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +77,12 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 		results.add(new ValidationResult(path, valid, violations));
 		List<String> importedFilePaths = new ArrayList<>();
 		for (Document doc : fileSet.getReferencedBpmnFiles()) {
-			importedFilePaths.add(doc.getBaseURI().replaceFirst("file:/", ""));
+			try {
+				importedFilePaths.add(new URI(doc.getBaseURI()).getPath());
+			} catch (URISyntaxException e) {
+				// Should not happen as Document doc is read from a valid URI
+				throw new RuntimeException("Should not happen as Document doc is read from a valid URI");
+			}	
 		}
 		for (String filePath : importedFilePaths) {
 			ProcessFileSet fileSetImport = bpmnImporter.loadAllFiles(filePath,
@@ -99,7 +108,12 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 
 		List<String> importedFilePaths = new ArrayList<>();
 		for (Document doc : fileSet.getReferencedBpmnFiles()) {
-			importedFilePaths.add(doc.getBaseURI().replaceFirst("file:/", ""));
+			try {
+				importedFilePaths.add(new URI(doc.getBaseURI()).getPath());
+			} catch (URISyntaxException e) {
+				// Should not happen as Document doc is read from a valid URI
+				throw new RuntimeException("Should not happen as Document doc is read from a valid URI");
+			}	
 		}
 		for (String filePath : importedFilePaths) {
 			ProcessFileSet fileSetImport = bpmnImporter.loadAllFiles(filePath,
