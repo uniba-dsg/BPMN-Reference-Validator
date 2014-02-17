@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -70,6 +71,9 @@ public class Frame extends JFrame {
 	private JTextArea infoDisplayJTextArea;
 	private Properties language;
 	private int languageNumber;
+	
+	private BPMNReferenceValidator validator;
+	private File lastPath;
 
 	/**
 	 * Constructor for starting the GUI.
@@ -80,6 +84,15 @@ public class Frame extends JFrame {
 		languageNumber = BPMNReferenceValidatorImpl.ENGLISH;
 		initialize();
 		setTexts();
+		
+		try {
+			validator = new BPMNReferenceValidatorImpl();
+		} catch (ValidatorException e) {
+			getInfoDisplayJTextArea().setText(e.getMessage());
+			validator = null;
+		}
+		
+		
 	}
 
 	private void initialize() {
@@ -357,7 +370,7 @@ public class Frame extends JFrame {
 				level = Level.INFO;
 			}
 			try {
-				BPMNReferenceValidator validator = new BPMNReferenceValidatorImpl();
+				
 				validator.setLogLevel(level);
 				validator.setLanguage(languageNumber);
 				if (getReferenceJRadioButton().isSelected()) {
@@ -494,14 +507,14 @@ public class Frame extends JFrame {
 	}
 
 	private void openFile() {
-		JFileChooser jFileChooser = new JFileChooser();
+		JFileChooser jFileChooser = new JFileChooser(lastPath);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"BPMN files (.bpmn & .xml)", "bpmn", "xml");
 		jFileChooser.setFileFilter(filter);
 		int returnValue = jFileChooser.showOpenDialog(this);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			getPathJTextField().setText(
-					jFileChooser.getSelectedFile().getAbsolutePath());
+			lastPath = jFileChooser.getSelectedFile();
+			getPathJTextField().setText(lastPath.getAbsolutePath());
 		}
 	}
 }
