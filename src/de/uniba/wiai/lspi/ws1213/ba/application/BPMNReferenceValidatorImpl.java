@@ -204,7 +204,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 		Document baseDocument = fileSet.getBpmnBaseFile();
 
 		// Get all Elements to Check from Base BPMN Process
-		HashMap<String, Element> elements = getAllElements(baseDocument, true);
+		HashMap<String, Element> elements = getAllElements(baseDocument);
 
 		String ownPrefix = "";
 		// special case if a prefix is used for the target namespace
@@ -333,12 +333,9 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	 * 
 	 * @param document
 	 *            the document to get the elements from
-	 * @param root
-	 *            a flag for the root document
 	 * @return the hash map with elements reachable through their id
 	 */
-	private HashMap<String, Element> getAllElements(Document document,
-			boolean root) {
+	private HashMap<String, Element> getAllElements(Document document) {
 		HashMap<String, Element> elements = new HashMap<>();
 		Element rootNode = document.getRootElement();
 		Filter<Element> filter = Filters.element();
@@ -374,7 +371,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 		for (Document doc : bpmnFiles) {
 			String targetNamespace = doc.getRootElement().getAttributeValue(
 					"targetNamespace");
-			HashMap<String, Element> docElements = getAllElements(doc, false);
+			HashMap<String, Element> docElements = getAllElements(doc);
 
 			if (groupedElements.containsKey(targetNamespace)) {
 				HashMap<String, Element> previousElems = groupedElements
