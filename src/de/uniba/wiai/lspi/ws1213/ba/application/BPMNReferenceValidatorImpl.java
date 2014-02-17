@@ -3,10 +3,6 @@ package de.uniba.wiai.lspi.ws1213.ba.application;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +39,6 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	private Properties language;
 	private HashMap<String, BPMNElement> bpmnRefElements;
 	private Logger LOGGER;
-	private String ownPrefix;
 
 	private final FileImporter bpmnImporter;
 
@@ -71,25 +66,12 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 
 		ProcessFileSet fileSet = bpmnImporter.loadAllFiles(path, true);
 
-		List<Violation> violations = startValidation(fileSet, "referenceType");
-
-		boolean valid = violations.size() == 0;
-		results.add(new ValidationResult(path, valid, violations));
-		List<String> importedFilePaths = new ArrayList<>();
-		for (Document doc : fileSet.getReferencedBpmnFiles()) {
-			try {
-				importedFilePaths.add(new URI(doc.getBaseURI()).getPath());
-			} catch (URISyntaxException e) {
-				// Should not happen as Document doc is read from a valid URI
-				throw new RuntimeException("Should not happen as Document doc is read from a valid URI");
-			}	
-		}
-		for (String filePath : importedFilePaths) {
+		for (String filePath : fileSet.getProcessedFiles()) {
 			ProcessFileSet fileSetImport = bpmnImporter.loadAllFiles(filePath,
 					true);
 			List<Violation> importedFileViolations = startValidation(
 					fileSetImport, "referenceType");
-			valid = importedFileViolations.size() == 0;
+			boolean valid = importedFileViolations.size() == 0;
 			results.add(new ValidationResult(filePath, valid,
 					importedFileViolations));
 		}
@@ -101,26 +83,13 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 			throws ValidatorException {
 		List<ValidationResult> results = new ArrayList<>();
 		ProcessFileSet fileSet = bpmnImporter.loadAllFiles(path, true);
-		List<Violation> violations = startValidation(fileSet, "existence");
-		// List<Violation> violations = startValidation(path, "existence");
-		boolean valid = violations.size() == 0;
-		results.add(new ValidationResult(path, valid, violations));
 
-		List<String> importedFilePaths = new ArrayList<>();
-		for (Document doc : fileSet.getReferencedBpmnFiles()) {
-			try {
-				importedFilePaths.add(new URI(doc.getBaseURI()).getPath());
-			} catch (URISyntaxException e) {
-				// Should not happen as Document doc is read from a valid URI
-				throw new RuntimeException("Should not happen as Document doc is read from a valid URI");
-			}	
-		}
-		for (String filePath : importedFilePaths) {
+		for (String filePath : fileSet.getProcessedFiles()) {
 			ProcessFileSet fileSetImport = bpmnImporter.loadAllFiles(filePath,
 					true);
 			List<Violation> importedFileViolations = startValidation(
 					fileSetImport, "existence");
-			valid = importedFileViolations.size() == 0;
+			boolean valid = importedFileViolations.size() == 0;
 			results.add(new ValidationResult(filePath, valid,
 					importedFileViolations));
 		}
@@ -237,6 +206,17 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 		// Get all Elements to Check from Base BPMN Process
 		HashMap<String, Element> elements = getAllElements(baseDocument, true);
 
+		String ownPrefix = "";
+		// special case if a prefix is used for the target namespace
+		Element rootNode = baseDocument.getRootElement();
+		String targetNamespace = rootNode.getAttributeValue("targetNamespace");
+		for (Namespace namespace : rootNode.getNamespacesInScope()) {
+			if (targetNamespace.equals(namespace.getURI())) {
+				ownPrefix = namespace.getPrefix();
+				break;
+			}
+		}
+
 		LOGGER.fine("ownprefix after getAllElements():" + ownPrefix);
 
 		// Store all Elements and their IDs in referenced Files into nested
@@ -306,12 +286,14 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 							if ("existence".equals(validationLevel)) {
 								validateExistence(elements, importedElements,
 										violationList, currentName, line,
-										checkingReference, referencedId);
+										checkingReference, referencedId,
+										ownPrefix);
 							} else if ("referenceType".equals(validationLevel)) {
 								validateReferenceType(elements,
 										importedElements, violationList,
 										currentElement, line,
-										checkingReference, referencedId);
+										checkingReference, referencedId,
+										ownPrefix);
 							} else {
 								LOGGER.severe(language
 										.getProperty("validator.illegalargument.validatinglevel.part1")
@@ -372,18 +354,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 				}
 			}
 		}
-		if (root) {
-			ownPrefix = "";
-			// special case if a prefix is used for the target namespace
-			String targetNamespace = rootNode
-					.getAttributeValue("targetNamespace");
-			for (Namespace namespace : rootNode.getNamespacesInScope()) {
-				if (targetNamespace.equals(namespace.getURI())) {
-					ownPrefix = namespace.getPrefix();
-					break;
-				}
-			}
-		}
+
 		return elements;
 	}
 
@@ -439,7 +410,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	private void validateReferenceType(HashMap<String, Element> elements,
 			HashMap<String, HashMap<String, Element>> importedElements,
 			List<Violation> violationList, Element currentElement, int line,
-			Reference checkingReference, String referencedId) {
+			Reference checkingReference, String referencedId, String ownPrefix) {
 		if (checkingReference.isQname()) {
 			// reference ID is prefixed and therefore probably to find in an
 			// imported file
@@ -455,7 +426,6 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 						namespace = nsp.getURI();
 					}
 				}
-
 				HashMap<String, Element> relevantElements = importedElements
 						.get(namespace);
 				// case if the namespace is used for the root file and an
@@ -567,7 +537,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	private void validateExistence(HashMap<String, Element> elements,
 			HashMap<String, HashMap<String, Element>> importedElements,
 			List<Violation> violationList, String currentName, int line,
-			Reference checkingReference, String referencedId) {
+			Reference checkingReference, String referencedId, String ownPrefix) {
 		if (checkingReference.isQname()) {
 			// reference ID is prefixed and therefore probably to find in an
 			// imported file

@@ -23,6 +23,7 @@ public class ProcessFileSet {
 	private List<Document> referencedBpmnFiles;
 	private List<Document> referencedWsdlFiles;
 	private List<Document> referencedXSDFiles;
+	private List<String> processedFiles;
 
 	/**
 	 * Creates a file set containing a base BPMN file representation as a
@@ -34,13 +35,15 @@ public class ProcessFileSet {
 	 *            - map containing Lists of all referenced BPMN, WSDL and XSD
 	 *            documents
 	 */
-	public ProcessFileSet(Document baseFile, Map<String, List<Document>> map) {
+	public ProcessFileSet(Document baseFile, Map<String, List<Document>> map,
+			List<String> processedFiles) {
 		this.bpmnBaseFile = baseFile;
 		if (map != null) {
 			referencedBpmnFiles = map.get(BPMN2_NAMESPACE);
 			referencedWsdlFiles = map.get(WSDL_NAMESPACE);
 			referencedXSDFiles = map.get(XSD_NAMESPACE);
 		}
+		this.processedFiles = processedFiles;
 	}
 
 	/**
@@ -77,6 +80,15 @@ public class ProcessFileSet {
 	 */
 	public List<Document> getReferencedXSDFiles() {
 		return referencedXSDFiles;
+	}
+	
+	/**
+	 * Getter for the list of all processed file paths
+	 * 
+	 * @return - returns the list of all processed file paths
+	 */
+	public List<String> getProcessedFiles() {
+		return processedFiles;
 	}
 
 }

@@ -93,13 +93,13 @@ public class FileImporter {
 		try {
 			validateFileAgainstBpmnXSD(baseFile);
 			Document baseDoc = builder.build(baseFile);
-			if (processImports) {
-				List<String> processedFiles = new ArrayList<>();
-				processedFiles.add(baseFile.getAbsolutePath());
+			List<String> processedFiles = new ArrayList<>();
+			processedFiles.add(baseFile.getAbsolutePath());
+			if (processImports) {		
 				return new ProcessFileSet(baseDoc, processImports(baseDoc,
-						baseFile.toPath(), processedFiles));
+						baseFile.toPath(), processedFiles), processedFiles);
 			} else {
-				return new ProcessFileSet(baseDoc, null);
+				return new ProcessFileSet(baseDoc, null, null);
 			}
 
 		} catch (JDOMException e) {
