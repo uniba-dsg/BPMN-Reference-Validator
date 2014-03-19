@@ -1,23 +1,7 @@
 package de.uniba.wiai.lspi.ws1213.ba.application.importer;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.xml.XMLConstants;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
+import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
+import de.uniba.wiai.lspi.ws1213.ba.application.xsdvalidation.ResourceResolver;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -26,11 +10,22 @@ import org.jdom2.filter.Filters;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.located.LocatedJDOMFactory;
 import org.jdom2.util.IteratorIterable;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
-import de.uniba.wiai.lspi.ws1213.ba.application.xsdvalidation.ResourceResolver;
+import javax.xml.XMLConstants;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * Helper Class to Import all referenced BPMN, WSDL and XSD files referenced by
@@ -116,7 +111,7 @@ public class FileImporter {
 	}
 
 	private File checkPathAndCreateFile(String path) throws ValidatorException {
-		if (path == null || path == "") {
+		if (path == null || path.equals("")) {
 			throw new ValidatorException(
 					language.getProperty("importer.path.notempty.notnull"),
 					new IllegalArgumentException(language
@@ -239,6 +234,7 @@ public class FileImporter {
 							new StreamSource(getClass().getResourceAsStream(
 									"/BPMN20.xsd")) });
 			Validator validator = schema.newValidator();
+            validator.setErrorHandler(new ValidationErrorHandler(XSDErrorList));
 			validator.validate(new StreamSource(file));
 			if (XSDErrorList.size() > 0) {
 				String xsdErrorText = language
@@ -266,4 +262,27 @@ public class FileImporter {
 		}
 	}
 
+    private class ValidationErrorHandler implements ErrorHandler {
+
+        List<SAXParseException> XSDErrorList = new ArrayList<>();
+
+        public ValidationErrorHandler(List<SAXParseException> XSDErrorList) {
+            this.XSDErrorList = XSDErrorList;
+        }
+
+        @Override
+        public void error(SAXParseException e) throws SAXException {
+            XSDErrorList.add(e);
+        }
+
+        @Override
+        public void fatalError(SAXParseException e) throws SAXException {
+            XSDErrorList.add(e);
+        }
+
+        @Override
+        public void warning(SAXParseException e) throws SAXException {
+            XSDErrorList.add(e);
+        }
+    }
 }
