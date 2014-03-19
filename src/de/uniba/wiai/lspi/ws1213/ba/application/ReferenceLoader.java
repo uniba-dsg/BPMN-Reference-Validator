@@ -82,18 +82,18 @@ public class ReferenceLoader {
 			validator.validate(new StreamSource(getClass().getResourceAsStream(
 					referencesPath)));
 			if (XSDErrorList.size() > 0) {
-				String xsdErroText = language.getProperty("loader.xsd.general")
+				String xsdErrorText = language.getProperty("loader.xsd.general")
 						+ System.lineSeparator();
 				for (SAXParseException saxParseException : XSDErrorList) {
-					xsdErroText = xsdErroText
+					xsdErrorText = xsdErrorText
 							+ language.getProperty("loader.xsd.error.part1")
 							+ saxParseException.getLineNumber() + " "
 							+ language.getProperty("loader.xsd.error.part2")
 							+ saxParseException.getMessage()
 							+ System.lineSeparator();
 				}
-				LOGGER.severe(xsdErroText);
-				throw new ValidatorException(xsdErroText);
+				LOGGER.severe(xsdErrorText);
+				throw new ValidatorException(xsdErrorText);
 			}
 
 			Document document = builder.build(getClass()
@@ -117,34 +117,34 @@ public class ReferenceLoader {
 				}
 				// separates the references for the current element
 				List<Reference> references = new ArrayList<>();
-				List<Element> refrencesInFile = element
+				List<Element> referencesInFile = element
 						.getChildren("reference");
-				for (Element refrence : refrencesInFile) {
-					int number = Integer.parseInt(refrence
-							.getAttributeValue("number"));
-					String referenceName = refrence.getChild("name").getText();
+				for (Element reference : referencesInFile) {
+					int number = Integer.parseInt(reference
+                            .getAttributeValue("number"));
+					String referenceName = reference.getChild("name").getText();
 					ArrayList<String> types = null;
-					List<Element> typesInFile = refrence.getChildren("type");
+					List<Element> typesInFile = reference.getChildren("type");
 					if (typesInFile.size() > 0) {
 						types = new ArrayList<>();
 						for (Element type : typesInFile) {
 							types.add(type.getText());
 						}
 					}
-					boolean qname = convertToBoolean(refrence
+					boolean qname = convertToBoolean(reference
 							.getAttributeValue("qname"));
-					boolean attribute = convertToBoolean(refrence
+					boolean attribute = convertToBoolean(reference
 							.getAttributeValue("attribute"));
 					boolean special = false;
-					String specialAttribute = refrence
+					String specialAttribute = reference
 							.getAttributeValue("special");
 					if (specialAttribute != null) {
 						special = convertToBoolean(specialAttribute);
 					}
-					Reference bpmnRefrence = new Reference(number,
+					Reference bpmnReference = new Reference(number,
 							referenceName, types, qname, attribute, special,
 							language);
-					references.add(bpmnRefrence);
+					references.add(bpmnReference);
 				}
 				BPMNElement bpmnElement = new BPMNElement(elementName, parent,
 						children, references, language);
@@ -186,7 +186,7 @@ public class ReferenceLoader {
 	 * @author Andreas Vorndran
 	 * 
 	 */
-	class XSDValidationLoggingErrorHandler implements ErrorHandler {
+	private class XSDValidationLoggingErrorHandler implements ErrorHandler {
 
 		@Override
 		public void error(SAXParseException exception) throws SAXException {
