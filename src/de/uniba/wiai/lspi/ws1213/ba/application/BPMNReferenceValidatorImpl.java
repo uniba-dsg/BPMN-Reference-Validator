@@ -102,8 +102,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 		ProcessFileSet fileSet = bpmnImporter.loadAllFiles(path, true);
 		List<Violation> violations = startValidation(fileSet, "referenceType");
 		boolean valid = violations.size() == 0;
-		ValidationResult result = new ValidationResult(path, valid, violations);
-		return result;
+		return new ValidationResult(path, valid, violations);
 	}
 
 	@Override
@@ -112,8 +111,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 		ProcessFileSet fileSet = bpmnImporter.loadAllFiles(path, true);
 		List<Violation> violations = startValidation(fileSet, "existence");
 		boolean valid = violations.size() == 0;
-		ValidationResult result = new ValidationResult(path, valid, violations);
-		return result;
+		return new ValidationResult(path, valid, violations);
 	}
 
 	@Override
@@ -183,8 +181,8 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	 * validation level. It is the entrance point for the validation. Therefore
 	 * it is used by the public methods of the interface.
 	 * 
-	 * @param document
-	 *            the path of the file, which should be validated
+	 * @param fileSet
+	 *            the ProcessFileSet of the file, which should be validated
 	 * @param validationLevel
 	 *            the validation level as String: "existence" or "referenceType"
 	 * @return a list of violations, which can be empty if no violations were

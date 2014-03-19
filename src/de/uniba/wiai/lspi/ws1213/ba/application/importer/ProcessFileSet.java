@@ -30,7 +30,7 @@ public class ProcessFileSet {
 	 * {@link org.jdom2.Document}, the Map should use the defined constants as
 	 * Keys.
 	 * 
-	 * @parm baseFile - Document representation of the base BPMN file
+	 * @param baseFile - Document representation of the base BPMN file
 	 * @param map
 	 *            - map containing Lists of all referenced BPMN, WSDL and XSD
 	 *            documents

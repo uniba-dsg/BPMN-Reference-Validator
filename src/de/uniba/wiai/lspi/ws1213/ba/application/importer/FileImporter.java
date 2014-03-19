@@ -131,8 +131,7 @@ public class FileImporter {
 									.getProperty("importer.path.notexistentOrDir"));
 		}
 
-		File baseFile = file.toFile();
-		return baseFile;
+		return file.toFile();
 	}
 
 	private Map<String, List<Document>> processImports(Document baseDoc,
@@ -247,7 +246,6 @@ public class FileImporter {
 						+ file.getName()
 						+ language.getProperty("validator.xsd.general.part2")
 						+ System.lineSeparator();
-				;
 				for (SAXParseException saxParseException : XSDErrorList) {
 					xsdErrorText = xsdErrorText
 							+ language.getProperty("loader.xsd.error.part1")

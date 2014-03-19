@@ -84,7 +84,6 @@ public class ReferenceLoader {
 			if (XSDErrorList.size() > 0) {
 				String xsdErroText = language.getProperty("loader.xsd.general")
 						+ System.lineSeparator();
-				;
 				for (SAXParseException saxParseException : XSDErrorList) {
 					xsdErroText = xsdErroText
 							+ language.getProperty("loader.xsd.error.part1")
@@ -177,11 +176,7 @@ public class ReferenceLoader {
 	}
 
 	private boolean convertToBoolean(String string) {
-		if (string.equals("true")) {
-			return true;
-		} else {
-			return false;
-		}
+        return string.equals("true");
 	}
 
 	/**

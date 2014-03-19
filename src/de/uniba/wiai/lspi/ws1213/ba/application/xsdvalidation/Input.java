@@ -121,8 +121,7 @@ public class Input implements LSInput {
 			try {
 				byte[] input = new byte[inputStream.available()];
 				inputStream.read(input);
-				String contents = new String(input);
-				return contents;
+				return new String(input);
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Exception " + e);
