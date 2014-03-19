@@ -15,12 +15,12 @@ import java.util.Properties;
  */
 public class ExistenceViolation implements Violation {
 
-	private String element;
-	private String reference;
-	private int line;
-	private int textVersion;
-	private String additionalInfo;
-	private Properties language;
+	private final String element;
+	private final String reference;
+	private final int line;
+	private final int textVersion;
+	private final String additionalInfo;
+	private final Properties language;
 
 	public static final int DEFAULT = 0;
 	public static final int PREFIX = 1;

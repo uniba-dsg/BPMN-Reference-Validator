@@ -19,11 +19,11 @@ public class ProcessFileSet {
 	public static final String WSDL_NAMESPACE = "http://www.w3.org/TR/wsdl20/";
 	public static final String XSD_NAMESPACE = "http://www.w3.org/2001/XMLSchema";
 
-	private Document bpmnBaseFile;
+	private final Document bpmnBaseFile;
 	private List<Document> referencedBpmnFiles;
 	private List<Document> referencedWsdlFiles;
 	private List<Document> referencedXSDFiles;
-	private List<String> processedFiles;
+	private final List<String> processedFiles;
 
 	/**
 	 * Creates a file set containing a base BPMN file representation as a

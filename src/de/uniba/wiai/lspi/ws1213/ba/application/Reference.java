@@ -19,13 +19,13 @@ import java.util.Properties;
  */
 public class Reference {
 
-	private int number;
-	private String name;
-	private ArrayList<String> types;
-	private boolean qname;
-	private boolean attribute;
-	private boolean special;
-	private Properties language;
+	private final int number;
+	private final String name;
+	private final ArrayList<String> types;
+	private final boolean qname;
+	private final boolean attribute;
+	private final boolean special;
+	private final Properties language;
 
 	/**
 	 * Constructor

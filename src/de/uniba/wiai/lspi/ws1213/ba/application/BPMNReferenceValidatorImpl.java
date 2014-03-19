@@ -359,11 +359,11 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	 * the ID as key {@see getAllElements()}
 	 * 
 	 * @param bpmnFiles
-	 * @return
-	 * @throws ValidatorException
+     *              the files to be analyzed
+	 * @return the grouped elements
 	 */
 	private HashMap<String, HashMap<String, Element>> getAllElementsGroupedByNamespace(
-			List<Document> bpmnFiles) throws ValidatorException {
+			List<Document> bpmnFiles) {
 		HashMap<String, HashMap<String, Element>> groupedElements = new HashMap<>();
 
 		for (Document doc : bpmnFiles) {
@@ -617,7 +617,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 			@SuppressWarnings("unchecked")
 			ArrayList<String> types = (ArrayList<String>) referencedTypes
 					.clone();
-			boolean childfound = false;
+			boolean childfound;
 			do {
 				childfound = false;
 				@SuppressWarnings("unchecked")

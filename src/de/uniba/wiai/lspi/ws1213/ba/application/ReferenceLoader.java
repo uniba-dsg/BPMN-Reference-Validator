@@ -35,9 +35,9 @@ import org.xml.sax.SAXParseException;
  */
 public class ReferenceLoader {
 
-	private List<SAXParseException> XSDErrorList;
+	private final List<SAXParseException> XSDErrorList;
 	private final Logger LOGGER;
-	private Properties language;
+	private final Properties language;
 
 	/**
 	 * Constructor
@@ -95,7 +95,8 @@ public class ReferenceLoader {
 				LOGGER.severe(xsdErroText);
 				throw new ValidatorException(xsdErroText);
 			}
-			Document document = (Document) builder.build(getClass()
+
+			Document document = builder.build(getClass()
 					.getResourceAsStream(referencesPath));
 			Element root = document.getRootElement();
 			// separates all BPMN elements

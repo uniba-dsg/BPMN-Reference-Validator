@@ -17,11 +17,11 @@ import java.util.Properties;
  */
 public class BPMNElement {
 
-	private String name;
-	private String parent;
-	private List<String> children;
-	private List<Reference> references;
-	private Properties language;
+	private final String name;
+	private final String parent;
+	private final List<String> children;
+	private final List<Reference> references;
+	private final Properties language;
 
 	/**
 	 * Constructor

@@ -18,12 +18,12 @@ import java.util.Properties;
  */
 public class TypeViolation implements Violation {
 
-	private String element;
-	private int line;
-	private String reference;
-	private String incorrectType;
-	private String expectedType;
-	private Properties language;
+	private final String element;
+	private final int line;
+	private final String reference;
+	private final String incorrectType;
+	private final String expectedType;
+	private final Properties language;
 
 	/**
 	 * Constructor

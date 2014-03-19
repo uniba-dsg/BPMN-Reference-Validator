@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class ValidationResult {
 
-	private String filePath;
-	private boolean valid;
-	private List<Violation> violations;
+	private final String filePath;
+	private final boolean valid;
+	private final List<Violation> violations;
 
 	/**
 	 * Constructor
