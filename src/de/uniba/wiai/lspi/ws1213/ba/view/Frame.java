@@ -509,7 +509,7 @@ public class Frame extends JFrame {
 	private void openFile() {
 		JFileChooser jFileChooser = new JFileChooser(lastPath);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
-				"BPMN files (.bpmn & .xml)", "bpmn", "xml");
+				"BPMN files (.bpmn(2) & .xml)", "bpmn", "xml", "bpmn2");
 		jFileChooser.setFileFilter(filter);
 		int returnValue = jFileChooser.showOpenDialog(this);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
