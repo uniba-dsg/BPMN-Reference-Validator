@@ -90,7 +90,7 @@ public class FileImporter {
 			Document baseDoc = builder.build(baseFile);
 			List<String> processedFiles = new ArrayList<>();
 			processedFiles.add(baseFile.getAbsolutePath());
-			if (processImports) {		
+			if (processImports) {
 				return new ProcessFileSet(baseDoc, processImports(baseDoc,
 						baseFile.toPath(), processedFiles), processedFiles);
 			} else {
@@ -143,7 +143,9 @@ public class FileImporter {
 
 		while (list.hasNext()) {
 			Element element = list.next();
-			if (element.getName().equals("import")) {
+			if ("import".equals(element.getName())
+					&& "http://www.omg.org/spec/BPMN/20100524/MODEL"
+							.equals(element.getNamespaceURI())) {
 				String path = element.getAttributeValue("location");
 
 				// Navigate from the folder containing the baseFile
@@ -234,7 +236,7 @@ public class FileImporter {
 							new StreamSource(getClass().getResourceAsStream(
 									"/BPMN20.xsd")) });
 			Validator validator = schema.newValidator();
-            validator.setErrorHandler(new ValidationErrorHandler(XSDErrorList));
+			validator.setErrorHandler(new ValidationErrorHandler(XSDErrorList));
 			validator.validate(new StreamSource(file));
 			if (XSDErrorList.size() > 0) {
 				String xsdErrorText = language
@@ -262,27 +264,27 @@ public class FileImporter {
 		}
 	}
 
-    private class ValidationErrorHandler implements ErrorHandler {
+	private class ValidationErrorHandler implements ErrorHandler {
 
-        List<SAXParseException> XSDErrorList = new ArrayList<>();
+		List<SAXParseException> XSDErrorList = new ArrayList<>();
 
-        public ValidationErrorHandler(List<SAXParseException> XSDErrorList) {
-            this.XSDErrorList = XSDErrorList;
-        }
+		public ValidationErrorHandler(List<SAXParseException> XSDErrorList) {
+			this.XSDErrorList = XSDErrorList;
+		}
 
-        @Override
-        public void error(SAXParseException e) throws SAXException {
-            XSDErrorList.add(e);
-        }
+		@Override
+		public void error(SAXParseException e) throws SAXException {
+			XSDErrorList.add(e);
+		}
 
-        @Override
-        public void fatalError(SAXParseException e) throws SAXException {
-            XSDErrorList.add(e);
-        }
+		@Override
+		public void fatalError(SAXParseException e) throws SAXException {
+			XSDErrorList.add(e);
+		}
 
-        @Override
-        public void warning(SAXParseException e) throws SAXException {
-            XSDErrorList.add(e);
-        }
-    }
+		@Override
+		public void warning(SAXParseException e) throws SAXException {
+			XSDErrorList.add(e);
+		}
+	}
 }
