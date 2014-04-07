@@ -5,4 +5,8 @@ bin/
 .gradle/
 .settings/
 build/
-/log
+log/
+out/
+*.iml
+*.ipr
+*.iws
