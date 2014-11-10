@@ -3,6 +3,7 @@ package de.uniba.wiai.lspi.ws1213.ba.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -49,10 +50,9 @@ public class TestBPMNFiles {
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
 		Violation foundError = errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("messageFlow", 11,
-//				"messageRef", "participant", null, null);
-//		Violation expectedError = new Violation(BPMNReferenceValidatorImpl.CONSTRAINT_REF_TYPE, "test/tests/test-1-gruppe-c.bpmn", 11, null, foundError.getMessage());
-//		assertEquals(expectedError, foundError);
+		
+		validateResultType(foundError, 11, "message", "participant");
+		
 	}
 
 	/**
@@ -71,10 +71,9 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("message", 3,
-//				"itemRef", "participant", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		validateResultType(errors.get(0), 3, "itemRef", "participant");
+		
 	}
 
 	/**
@@ -92,6 +91,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(2, errors.size());
+// TODO
 //		TypeViolation foundError1 = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError1 = new TypeViolation("sequenceFlow", 32,
 //				"sourceRef", "participant", null, null);
@@ -118,6 +118,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(2, errors.size());
+		// TODO
 //		TypeViolation foundError1 = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError1 = new TypeViolation("task", 10,
 //				"incoming", "participant", null, null);
@@ -144,6 +145,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("participant", 11,
 //				"interfaceRef", "task", null, null);
@@ -166,6 +168,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("partnerEntity", 23,
 //				"participantRef", "sequenceFlow", null, null);
@@ -188,6 +191,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(2, errors.size());
+		// TODO
 //		TypeViolation foundError1 = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError1 = new TypeViolation("messageFlow", 11,
 //				"sourceRef", "message", null, null);
@@ -214,6 +218,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("sendTask", 22,
 //				"operationRef", "message", null, null);
@@ -236,6 +241,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("inputSet", 18,
 //				"dataInputRefs", "participant", null, null);
@@ -258,6 +264,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("outputSet", 19,
 //				"dataOutputRefs", "participant", null, null);
@@ -280,6 +287,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(2, errors.size());
+		// TODO
 //		TypeViolation foundError1 = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError1 = new TypeViolation(
 //				"dataOutputAssociation", 23, "sourceRef", "participant", null,
@@ -308,6 +316,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation(
 //				"intermediateThrowEvent", 27, "eventDefinitionRef",
@@ -331,6 +340,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("boundaryEvent", 19,
 //				"attachedToRef", "participant", null, null);
@@ -353,6 +363,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(2, errors.size());
+		// TODO
 //		TypeViolation foundError1 = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError1 = new TypeViolation("linkEventDefinition",
 //				24, "source", "startEvent", null, null);
@@ -379,6 +390,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("process", 18,
 //				"definitionalCollaborationRef", "message", null, null);
@@ -401,6 +413,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("correlationKey", 23,
 //				"correlationPropertyRef", "participant", null, null);
@@ -423,6 +436,7 @@ public class TestBPMNFiles {
 		assertFalse(result.isValid());
 		List<Violation> errors = result.getViolations();
 		assertEquals(1, errors.size());
+		// TODO
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
 //		TypeViolation expectedError = new TypeViolation("operation", 8,
 //				"errorRef", "message", null, null);
@@ -443,6 +457,7 @@ public class TestBPMNFiles {
 				.validate("test/tests/test-18-referenz-6-teil-2.bpmn");
 		assertEquals(2, result.getCheckedFiles().size());
 		assertFalse(result.isValid());
+		// TODO
 //		List<Violation> errors = result1.getViolations();
 //		assertEquals(1, errors.size());
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
@@ -466,6 +481,7 @@ public class TestBPMNFiles {
 				.validate("test/tests/test-18-referenz-6-teil-2-subfolder.bpmn");
 		assertEquals(2, result.getCheckedFiles().size());
 		assertFalse(result.isValid());
+		// TODO
 //		List<Violation> errors = result1.getViolations();
 //		assertEquals(1, errors.size());
 //		TypeViolation foundError = (TypeViolation) errors.get(0);
@@ -513,5 +529,19 @@ public class TestBPMNFiles {
 				.validate("test/tests/test-19-referenz-6-korrekt.bpmn");
 		assertEquals(2, result.getCheckedFiles().size());
 		assertTrue(result.isValid());
+	}
+	
+	private static void validateResultType(Violation foundError, int expectedLine, String validType, String typeToBeFound) {
+		if(foundError.getConstraint()==null || !foundError.getConstraint().equals(BPMNReferenceValidatorImpl.CONSTRAINT_REF_TYPE)) {
+			fail("found violation has the wrong type. Expected: "+BPMNReferenceValidatorImpl.CONSTRAINT_REF_TYPE+" Found: "+foundError.getConstraint());
+		}
+		
+		if(foundError.getLine()<=0 || foundError.getLine()!=expectedLine) {
+			fail("Violation is at an unexpected line. Expected: "+expectedLine+" Found: "+foundError.getLine());
+		}
+		
+		if(foundError.getMessage()==null || !foundError.getMessage().contains("incorrect type "+typeToBeFound)) {
+			fail("Violation Message does not contain expected String: 'incorrect type "+typeToBeFound+"'\n\t Message was: "+foundError.getMessage());
+		} else if(!foundError.getMessage().contains(validType));
 	}
 }
