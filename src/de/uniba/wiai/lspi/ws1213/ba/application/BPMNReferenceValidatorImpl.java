@@ -19,6 +19,7 @@ import org.jdom2.filter.Filter;
 import org.jdom2.filter.Filters;
 import org.jdom2.located.LocatedElement;
 import org.jdom2.util.IteratorIterable;
+import org.jdom2.xpath.XPathHelper;
 
 import de.uniba.dsg.bpmnspector.common.ValidationResult;
 import de.uniba.dsg.bpmnspector.common.Violation;
@@ -48,7 +49,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 
 	public static final int ENGLISH = 0;
 	public static final int GERMAN = 1;
-	
+
 	public static final String CONSTRAINT_REF_EXISTENCE = "REF_EXISTENCE";
 	public static final String CONSTRAINT_REF_TYPE = "REF_TYPE";
 
@@ -303,7 +304,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 						if (referencedId != null) {
 							if ("existence".equals(validationLevel)) {
 								validateExistence(elements, importedElements,
-										violationList, currentName, line,
+										violationList, currentElement, line,
 										checkingReference, referencedId,
 										ownPrefix);
 							} else if ("referenceType".equals(validationLevel)) {
@@ -450,7 +451,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 					if (!elements.containsKey(importedId)
 							&& !relevantElements.containsKey(importedId)) {
 						addExistenceViolation(violationList, line,
-								currentElement.getName(), checkingReference);
+								currentElement, checkingReference);
 						// case if the element could be found in the root file
 						// (and perhaps in the imported file, which does not
 						// matter because of the same namespace)
@@ -472,7 +473,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 				} else if (ownPrefix.equals(prefix)) {
 					if (!elements.containsKey(importedId)) {
 						addExistenceViolation(violationList, line,
-								currentElement.getName(), checkingReference);
+								currentElement, checkingReference);
 					} else {
 						Element referencedElement = elements.get(importedId);
 						checkTypeAndAddViolation(violationList, line,
@@ -484,22 +485,16 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 				} else if (relevantElements == null) {
 					// import does not exist or is no BPMN file (as it has to
 					// be)
-					String message = ViolationMessageCreator
-							.createExistenceViolationMessage(
-									currentElement.getName(),
-									checkingReference.getName(), line,
-									ViolationMessageCreator.PREFIX_MSG, prefix, language);
-					// TODO!
-					Violation violation = new Violation(CONSTRAINT_REF_EXISTENCE,
-							"TODO filename", line, "todo XPATH", message);
-					violationList.add(violation);
+					addExistenceViolation(violationList, line, currentElement,
+							checkingReference);
+
 					// case if the namespace is used by an imported file
 				} else {
 					Element referencedElement = relevantElements
 							.get(importedId);
 					if (referencedElement == null) {
 						addExistenceViolation(violationList, line,
-								currentElement.getName(), checkingReference);
+								currentElement, checkingReference);
 					} else {
 						checkTypeAndAddViolation(violationList, line,
 								currentElement, checkingReference,
@@ -510,8 +505,8 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 				// in the root file
 			} else {
 				if (!elements.containsKey(referencedId)) {
-					addExistenceViolation(violationList, line,
-							currentElement.getName(), checkingReference);
+					addExistenceViolation(violationList, line, currentElement,
+							checkingReference);
 				} else {
 					Element referencedElement = elements.get(referencedId);
 					checkTypeAndAddViolation(violationList, line,
@@ -523,8 +518,8 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 			// the root file
 		} else {
 			if (!elements.containsKey(referencedId)) {
-				addExistenceViolation(violationList, line,
-						currentElement.getName(), checkingReference);
+				addExistenceViolation(violationList, line, currentElement,
+						checkingReference);
 			} else {
 				Element referencedElement = elements.get(referencedId);
 				checkTypeAndAddViolation(violationList, line, currentElement,
@@ -554,7 +549,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	 */
 	private void validateExistence(HashMap<String, Element> elements,
 			HashMap<String, HashMap<String, Element>> importedElements,
-			List<Violation> violationList, String currentName, int line,
+			List<Violation> violationList, Element currentElement, int line,
 			Reference checkingReference, String referencedId, String ownPrefix) {
 		if (checkingReference.isQname()) {
 			// reference ID is prefixed and therefore probably to find in an
@@ -570,41 +565,35 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 				if (ownPrefix.equals(prefix) && relevantElements != null) {
 					if (!elements.containsKey(importedId)
 							&& !relevantElements.containsKey(importedId)) {
-						addExistenceViolation(violationList, line, currentName,
-								checkingReference);
+						addExistenceViolation(violationList, line,
+								currentElement, checkingReference);
 					}
 					// case if the namespace is only used for the root file
 				} else if (ownPrefix.equals(prefix)) {
 					if (!elements.containsKey(importedId)) {
-						addExistenceViolation(violationList, line, currentName,
-								checkingReference);
+						addExistenceViolation(violationList, line,
+								currentElement, checkingReference);
 					}
 					// case if the namespace is not used for the roor file or an
 					// imported file
 				} else if (relevantElements == null) {
 					// import does not exist or is no BPMN file (as it has to
 					// be)
+					addExistenceViolation(violationList, line, currentElement,
+							checkingReference);
 
-					String message = ViolationMessageCreator
-							.createExistenceViolationMessage(currentName,
-									checkingReference.getName(), line,
-									ViolationMessageCreator.PREFIX_MSG, prefix, language);
-					// TODO!
-					Violation violation = new Violation(CONSTRAINT_REF_EXISTENCE,
-							"TODO filename", line, "todo XPATH", message);
-					violationList.add(violation);
 					// case if the namespace is used by an imported file
 				} else {
 					if (relevantElements.get(importedId) == null) {
-						addExistenceViolation(violationList, line, currentName,
-								checkingReference);
+						addExistenceViolation(violationList, line,
+								currentElement, checkingReference);
 					}
 				}
 				// the referenced element has no prefix and therefore is to find
 				// in the root file
 			} else {
 				if (!elements.containsKey(referencedId)) {
-					addExistenceViolation(violationList, line, currentName,
+					addExistenceViolation(violationList, line, currentElement,
 							checkingReference);
 				}
 			}
@@ -612,7 +601,7 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 			// the root file
 		} else {
 			if (!elements.containsKey(referencedId)) {
-				addExistenceViolation(violationList, line, currentName,
+				addExistenceViolation(violationList, line, currentElement,
 						checkingReference);
 			}
 		}
@@ -673,15 +662,8 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 				}
 			}
 			if (!foundType) {
-				String message = ViolationMessageCreator
-						.createTypeViolationMessage(currentElement.getName(),
-								line, checkingReference.getName(),
-								referencedElement.getName(), types.toString(),
-								language);
-				// TODO!
-				Violation violation = new Violation(CONSTRAINT_REF_TYPE,
-						"TODO filename", line, "todo XPATH", message);
-				violationList.add(violation);
+				addReferenceTypeViolation(violationList, line, currentElement,
+						checkingReference, referencedElement, types);
 			} else {
 				// special cases for additional checks (look up bachelor thesis
 				// for the reference number)
@@ -692,17 +674,9 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 								.getAttributeValue("triggeredByEvent");
 						if (isEventSubprocess != null
 								&& isEventSubprocess.equals("true")) {
-							String message = ViolationMessageCreator
-									.createTypeViolationMessage(
-											currentElement.getName(), line,
-											checkingReference.getName(),
-											referencedElement.getName(),
-											types.toString(), language);
-							// TODO!
-							Violation violation = new Violation(CONSTRAINT_REF_TYPE,
-									"TODO filename", line, "todo XPATH",
-									message);
-							violationList.add(violation);
+							addReferenceTypeViolation(violationList, line,
+									currentElement, checkingReference,
+									referencedElement, types);
 						}
 					} else if (checkingReference.getNumber() == 62) {
 						Element parent = currentElement.getParentElement();
@@ -712,34 +686,18 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 							if (tasks.contains(parent.getName())) {
 								if (!referencedElement.getName().equals(
 										"dataInput")) {
-									String message = ViolationMessageCreator
-											.createTypeViolationMessage(
-													currentElement.getName(),
-													line,
-													checkingReference.getName(),
-													referencedElement.getName(),
-													types.toString(), language);
-									// TODO!
-									Violation violation = new Violation(
-											CONSTRAINT_REF_TYPE, "TODO filename", line,
-											"todo XPATH", message);
-									violationList.add(violation);
+									addReferenceTypeViolation(violationList,
+											line, currentElement,
+											checkingReference,
+											referencedElement, types);
 								}
 							} else if (subprocesses.contains(parent.getName())) {
 								if (!referencedElement.getName().equals(
 										"dataObject")) {
-									String message = ViolationMessageCreator
-											.createTypeViolationMessage(
-													currentElement.getName(),
-													line,
-													checkingReference.getName(),
-													referencedElement.getName(),
-													types.toString(), language);
-									// TODO!
-									Violation violation = new Violation(
-											CONSTRAINT_REF_TYPE, "TODO filename", line,
-											"todo XPATH", message);
-									violationList.add(violation);
+									addReferenceTypeViolation(violationList,
+											line, currentElement,
+											checkingReference,
+											referencedElement, types);
 								}
 							}
 						}
@@ -751,34 +709,18 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 							if (tasks.contains(parent.getName())) {
 								if (!referencedElement.getName().equals(
 										"dataOutput")) {
-									String message = ViolationMessageCreator
-											.createTypeViolationMessage(
-													currentElement.getName(),
-													line,
-													checkingReference.getName(),
-													referencedElement.getName(),
-													types.toString(), language);
-									// TODO!
-									Violation violation = new Violation(
-											CONSTRAINT_REF_TYPE, "TODO filename", line,
-											"todo XPATH", message);
-									violationList.add(violation);
+									addReferenceTypeViolation(violationList,
+											line, currentElement,
+											checkingReference,
+											referencedElement, types);
 								}
 							} else if (subprocesses.contains(parent.getName())) {
 								if (!referencedElement.getName().equals(
 										"dataObject")) {
-									String message = ViolationMessageCreator
-											.createTypeViolationMessage(
-													currentElement.getName(),
-													line,
-													checkingReference.getName(),
-													referencedElement.getName(),
-													types.toString(), language);
-									// TODO!
-									Violation violation = new Violation(
-											CONSTRAINT_REF_TYPE, "TODO filename", line,
-											"todo XPATH", message);
-									violationList.add(violation);
+									addReferenceTypeViolation(violationList,
+											line, currentElement,
+											checkingReference,
+											referencedElement, types);
 								}
 							}
 						}
@@ -827,15 +769,29 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	 *            the violated reference
 	 */
 	private void addExistenceViolation(List<Violation> violationList, int line,
-			String currentName, Reference checkingReference) {
+			Element currentElement, Reference checkingReference) {
 		String message = ViolationMessageCreator
-				.createExistenceViolationMessage(currentName,
+				.createExistenceViolationMessage(currentElement.getName(),
 						checkingReference.getName(), line,
 						ViolationMessageCreator.DEFAULT_MSG,
-						null, language);
+						XPathHelper.getAbsolutePath(currentElement), language);
 		// TODO!
 		Violation violation = new Violation(CONSTRAINT_REF_EXISTENCE,
-				"TODO filename", line, "todo XPATH", message);
+				"TODO filename", line, null, message);
+		violationList.add(violation);
+	}
+
+	
+	private void addReferenceTypeViolation(List<Violation> violationList,
+			int line, Element currentElement, Reference checkingReference,
+			Element referencedElement, ArrayList<String> types) {
+		String message = ViolationMessageCreator.createTypeViolationMessage(
+				currentElement.getName(), line, checkingReference.getName(),
+				referencedElement.getName(), types.toString(), language);
+		// TODO!
+		Violation violation = new Violation(CONSTRAINT_REF_TYPE,
+				"TODO filename", line,
+				XPathHelper.getAbsolutePath(currentElement), message);
 		violationList.add(violation);
 	}
 
