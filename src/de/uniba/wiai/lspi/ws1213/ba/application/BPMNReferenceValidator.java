@@ -1,7 +1,7 @@
 package de.uniba.wiai.lspi.ws1213.ba.application;
 
-import java.util.List;
 import java.util.logging.Level;
+import de.uniba.dsg.bpmnspector.common.ValidationResult;
 
 /**
  * This interface specifies the functionality provided by the application layer.
@@ -39,7 +39,7 @@ public interface BPMNReferenceValidator {
 	 * @throws ValidatorException
 	 *             if technical problems occurred
 	 */
-	List<ValidationResult> validate(String path) throws ValidatorException;
+	ValidationResult validate(String path) throws ValidatorException;
 
 	/**
 	 * This method validates a BPMN file with the given path and all imported
@@ -52,7 +52,7 @@ public interface BPMNReferenceValidator {
 	 * @throws ValidatorException
 	 *             if technical problems occurred
 	 */
-	List<ValidationResult> validateExistenceOnly(String path)
+	ValidationResult validateExistenceOnly(String path)
 			throws ValidatorException;
 
 	/**

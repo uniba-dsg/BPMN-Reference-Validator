@@ -11,7 +11,6 @@ import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -33,12 +32,12 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.uniba.dsg.bpmnspector.common.ValidationResult;
+import de.uniba.dsg.bpmnspector.common.Violation;
 import de.uniba.wiai.lspi.ws1213.ba.Main;
 import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidator;
 import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl;
-import de.uniba.wiai.lspi.ws1213.ba.application.ValidationResult;
 import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
-import de.uniba.wiai.lspi.ws1213.ba.application.Violation;
 
 /**
  * This class starts the application from a GUI, based on this JFrame extension.
@@ -373,33 +372,25 @@ public class Frame extends JFrame {
 				
 				validator.setLogLevel(level);
 				validator.setLanguage(languageNumber);
+				ValidationResult result = new ValidationResult();
 				if (getReferenceJRadioButton().isSelected()) {
 					if (getSingleJCheckBox().isSelected()) {
-						ValidationResult result = validator
-								.validateSingleFile(path);
-						output = output + getValidationOutput(result);
+						result = validator.validateSingleFile(path);
 					} else {
-						List<ValidationResult> results = validator
-								.validate(path);
-						for (ValidationResult validationResult : results) {
-							output = output
-									+ getValidationOutput(validationResult);
-						}
+						result = validator.validate(path);	
 					}
 				} else if (getExistenceJRadioButton().isSelected()) {
 					if (getSingleJCheckBox().isSelected()) {
-						ValidationResult result = validator
+						result = validator
 								.validateSingleFileExistenceOnly(path);
-						output = output + getValidationOutput(result);
 					} else {
-						List<ValidationResult> results = validator
-								.validateExistenceOnly(path);
-						for (ValidationResult validationResult : results) {
-							output = output
-									+ getValidationOutput(validationResult);
-						}
+						result = validator.validateExistenceOnly(path);
 					}
 				}
+				
+			output = output
+					+ getValidationOutput(result);
+				
 			} catch (ValidatorException e) {
 				output = output + e.getMessage();
 			}
@@ -408,7 +399,8 @@ public class Frame extends JFrame {
 	}
 
 	private String getValidationOutput(ValidationResult result) {
-		String output = result.getFilePath() + System.lineSeparator();
+//		String output = result.getFilePath() + System.lineSeparator();
+		String output ="";
 		if (result.isValid()) {
 			output = output + language.getProperty("view.no_violations")
 					+ System.lineSeparator();
@@ -418,7 +410,7 @@ public class Frame extends JFrame {
 			int number = 1;
 			for (Violation violation : result.getViolations()) {
 				output = output + number + ". "
-						+ violation.getViolationMessage()
+						+ violation.toString()
 						+ System.lineSeparator();
 				number++;
 			}

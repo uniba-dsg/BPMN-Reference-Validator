@@ -3,15 +3,15 @@ package de.uniba.wiai.lspi.ws1213.ba.view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 
-import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl;
+import de.uniba.dsg.bpmnspector.common.ValidationResult;
+import de.uniba.dsg.bpmnspector.common.Violation;
 import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidator;
-import de.uniba.wiai.lspi.ws1213.ba.application.ValidationResult;
+import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl;
 import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
-import de.uniba.wiai.lspi.ws1213.ba.application.Violation;
+
 
 /**
  * This class is for starting the application in the console modus. Therefore it
@@ -110,30 +110,26 @@ public class Console {
 			BPMNReferenceValidator validator = new BPMNReferenceValidatorImpl();
 			validator.setLogLevel(level);
 			validator.setLanguage(languageNumber);
-			if (validationType.equals("reference")) {
+			ValidationResult result = new ValidationResult();
+			if (validationType.equals("reference")) {	
 				if (singleFile) {
-					ValidationResult result = validator
+					result = validator
 							.validateSingleFile(path);
-					printValidationResult(result, language);
+					
 				} else {
-					List<ValidationResult> results = validator.validate(path);
-					for (ValidationResult validationResult : results) {
-						printValidationResult(validationResult, language);
-					}
+					result = validator.validate(path);
 				}
+				
 			} else if (validationType.equals("existence")) {
 				if (singleFile) {
-					ValidationResult result = validator
+					result = validator
 							.validateSingleFileExistenceOnly(path);
-					printValidationResult(result, language);
 				} else {
-					List<ValidationResult> results = validator
+					result = validator
 							.validateExistenceOnly(path);
-					for (ValidationResult validationResult : results) {
-						printValidationResult(validationResult, language);
-					}
 				}
 			}
+			printValidationResult(result, language);
 		} catch (ValidatorException e) {
 			System.out.println(e.getMessage());
 		}
@@ -149,7 +145,7 @@ public class Console {
 	 */
 	private void printValidationResult(ValidationResult result,
 			Properties language) {
-		System.out.println(result.getFilePath());
+//		System.out.println(result.getFilePath());
 		if (result.isValid()) {
 			System.out.println(language.getProperty("view.no_violations"));
 		} else {
@@ -157,7 +153,7 @@ public class Console {
 			int number = 1;
 			for (Violation violation : result.getViolations()) {
 				System.out.println(number + ". "
-						+ violation.getViolationMessage());
+						+ violation.toString());
 				number++;
 			}
 		}
