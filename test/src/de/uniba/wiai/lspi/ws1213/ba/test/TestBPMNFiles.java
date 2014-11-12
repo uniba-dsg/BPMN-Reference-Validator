@@ -45,13 +45,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT1() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-1-gruppe-c.bpmn");
-		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		Violation foundError = errors.get(0);
 		
-		validateResultType(foundError, 11, "message", "participant");
+		assertEquals(1, result.getCheckedFiles().size());
+		
+		assertViolationCount(result, 1);
+				
+		validateResultType(result.getViolations().get(0), 11, "message", "participant");
 		
 	}
 
@@ -67,12 +66,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT2() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-2-gruppe-d.bpmn");
-		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
 		
-		validateResultType(errors.get(0), 3, "itemRef", "participant");
+		assertEquals(1, result.getCheckedFiles().size());
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 3, "itemRef", "participant");
 		
 	}
 
@@ -87,19 +86,14 @@ public class TestBPMNFiles {
 	public void testValidateWithT3() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-3-gruppe-e.bpmn");
+
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(2, errors.size());
-// TODO
-//		TypeViolation foundError1 = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError1 = new TypeViolation("sequenceFlow", 32,
-//				"sourceRef", "participant", null, null);
-//		TypeViolation foundError2 = (TypeViolation) errors.get(1);
-//		TypeViolation expectedError2 = new TypeViolation("sequenceFlow", 33,
-//				"targetRef", "sequenceFlow", null, null);
-//		assertEquals(expectedError1, foundError1);
-//		assertEquals(expectedError2, foundError2);
+		
+		assertViolationCount(result, 2);
+		
+		validateResultType(result.getViolations().get(0), 32, "sourceRef", "participant");
+		validateResultType(result.getViolations().get(1), 33, "targetRef", "sequenceFlow");
+		
 	}
 
 	/**
@@ -114,19 +108,13 @@ public class TestBPMNFiles {
 	public void testValidateWithT4() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-4-gruppe-f.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(2, errors.size());
-		// TODO
-//		TypeViolation foundError1 = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError1 = new TypeViolation("task", 10,
-//				"incoming", "participant", null, null);
-//		TypeViolation foundError2 = (TypeViolation) errors.get(1);
-//		TypeViolation expectedError2 = new TypeViolation("exclusiveGateway",
-//				30, "default", "startEvent", null, null);
-//		assertEquals(expectedError1, foundError1);
-//		assertEquals(expectedError2, foundError2);
+		
+		assertViolationCount(result, 2);
+		
+		validateResultType(result.getViolations().get(0), 10, "incoming", "participant");
+		validateResultType(result.getViolations().get(1), 30, "dafault", "startEvent");
 	}
 
 	/**
@@ -141,15 +129,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT5() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-5-gruppe-g.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("participant", 11,
-//				"interfaceRef", "task", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 11, "interfaceRef", "task");
 	}
 
 	/**
@@ -164,15 +149,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT6() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-6-gruppe-h.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("partnerEntity", 23,
-//				"participantRef", "sequenceFlow", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 23, "participantRef", "sequenceFlow");
 	}
 
 	/**
@@ -187,19 +169,13 @@ public class TestBPMNFiles {
 	public void testValidateWithT7() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-7-gruppe-i1.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(2, errors.size());
-		// TODO
-//		TypeViolation foundError1 = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError1 = new TypeViolation("messageFlow", 11,
-//				"sourceRef", "message", null, null);
-//		TypeViolation foundError2 = (TypeViolation) errors.get(1);
-//		TypeViolation expectedError2 = new TypeViolation("messageFlow", 11,
-//				"targetRef", "process", null, null);
-//		assertEquals(expectedError1, foundError1);
-//		assertEquals(expectedError2, foundError2);
+		
+		assertViolationCount(result, 2);
+		
+		validateResultType(result.getViolations().get(0), 11, "sourceRef", "message");
+		validateResultType(result.getViolations().get(1), 11, "targetRef", "process");
 	}
 
 	/**
@@ -214,15 +190,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT8() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-8-gruppe-l.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("sendTask", 22,
-//				"operationRef", "message", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 22, "operationRef", "message");
 	}
 
 	/**
@@ -237,15 +210,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT9() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-9-gruppe-m.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("inputSet", 18,
-//				"dataInputRefs", "participant", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 18, "dataInputRefs", "participant");
 	}
 
 	/**
@@ -260,15 +230,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT10() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-10-gruppe-n.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("outputSet", 19,
-//				"dataOutputRefs", "participant", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 19, "dataOutputRefs", "participant");
 	}
 
 	/**
@@ -283,21 +250,13 @@ public class TestBPMNFiles {
 	public void testValidateWithT11() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-11-gruppe-o.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(2, errors.size());
-		// TODO
-//		TypeViolation foundError1 = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError1 = new TypeViolation(
-//				"dataOutputAssociation", 23, "sourceRef", "participant", null,
-//				null);
-//		TypeViolation foundError2 = (TypeViolation) errors.get(1);
-//		TypeViolation expectedError2 = new TypeViolation(
-//				"dataInputAssociation", 44, "targetRef", "startEvent", null,
-//				null);
-//		assertEquals(expectedError1, foundError1);
-//		assertEquals(expectedError2, foundError2);
+		
+		assertViolationCount(result, 2);
+		
+		validateResultType(result.getViolations().get(0), 23, "sourceRef", "participant");
+		validateResultType(result.getViolations().get(1), 44, "targetRef", "startEvent");
 	}
 
 	/**
@@ -312,16 +271,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT12() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-12-gruppe-p.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation(
-//				"intermediateThrowEvent", 27, "eventDefinitionRef",
-//				"sequenceFlow", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 27, "eventDefinitionRef", "sequenceFlow");
 	}
 
 	/**
@@ -336,15 +291,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT13() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-13-gruppe-q.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("boundaryEvent", 19,
-//				"attachedToRef", "participant", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 19, "attachedToRef", "participant");
 	}
 
 	/**
@@ -359,19 +311,13 @@ public class TestBPMNFiles {
 	public void testValidateWithT14() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-14-gruppe-r.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(2, errors.size());
-		// TODO
-//		TypeViolation foundError1 = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError1 = new TypeViolation("linkEventDefinition",
-//				24, "source", "startEvent", null, null);
-//		TypeViolation foundError2 = (TypeViolation) errors.get(1);
-//		TypeViolation expectedError2 = new TypeViolation("linkEventDefinition",
-//				43, "target", "endEvent", null, null);
-//		assertEquals(expectedError1, foundError1);
-//		assertEquals(expectedError2, foundError2);
+		
+		assertViolationCount(result, 2);
+		
+		validateResultType(result.getViolations().get(0), 24, "source", "startEvent");
+		validateResultType(result.getViolations().get(1), 43, "target", "endEvent");
 	}
 
 	/**
@@ -386,15 +332,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT15() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-15-gruppe-s.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("process", 18,
-//				"definitionalCollaborationRef", "message", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 18, "definitionalCollaborationRef", "message");
 	}
 
 	/**
@@ -409,15 +352,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT16() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-16-gruppe-t.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("correlationKey", 23,
-//				"correlationPropertyRef", "participant", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 23, "correlationPropertyRef", "participant");
 	}
 
 	/**
@@ -432,15 +372,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT17() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-17-gruppe-u.bpmn");
+		
 		assertEquals(1, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		List<Violation> errors = result.getViolations();
-		assertEquals(1, errors.size());
-		// TODO
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("operation", 8,
-//				"errorRef", "message", null, null);
-//		assertEquals(expectedError, foundError);
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 8, "errorRef", "message");
 	}
 
 	/**
@@ -455,16 +392,12 @@ public class TestBPMNFiles {
 	public void testValidateWithT18() throws ValidatorException {
 		ValidationResult result = application
 				.validate("test/tests/test-18-referenz-6-teil-2.bpmn");
+		
 		assertEquals(2, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		// TODO
-//		List<Violation> errors = result1.getViolations();
-//		assertEquals(1, errors.size());
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("group", 10,
-//				"categoryValueRef", "participant", null, null);
-//		assertEquals(expectedError, foundError);
-//		assertTrue(results.get(1).isValid());
+		
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 10, "categoryValueRef", "participant");
 	}
 
 	/**
@@ -480,15 +413,10 @@ public class TestBPMNFiles {
 		ValidationResult result = application
 				.validate("test/tests/test-18-referenz-6-teil-2-subfolder.bpmn");
 		assertEquals(2, result.getCheckedFiles().size());
-		assertFalse(result.isValid());
-		// TODO
-//		List<Violation> errors = result1.getViolations();
-//		assertEquals(1, errors.size());
-//		TypeViolation foundError = (TypeViolation) errors.get(0);
-//		TypeViolation expectedError = new TypeViolation("group", 10,
-//				"categoryValueRef", "participant", null, null);
-//		assertEquals(expectedError, foundError);
-//		assertTrue(results.get(1).isValid());
+				
+		assertViolationCount(result, 1);
+		
+		validateResultType(result.getViolations().get(0), 10, "categoryValueRef", "participant");
 	}
 	
 //	commented out as absolute path is system dependent
@@ -543,5 +471,14 @@ public class TestBPMNFiles {
 		if(foundError.getMessage()==null || !foundError.getMessage().contains("incorrect type "+typeToBeFound)) {
 			fail("Violation Message does not contain expected String: 'incorrect type "+typeToBeFound+"'\n\t Message was: "+foundError.getMessage());
 		} else if(!foundError.getMessage().contains(validType));
+	}
+	
+	private static void assertViolationCount(ValidationResult result, int expectedViolationsCount) {
+		if(expectedViolationsCount!=0) { 
+			assertFalse(result.isValid());
+			assertEquals(expectedViolationsCount, result.getViolations().size());
+		} else {
+			
+		}
 	}
 }
