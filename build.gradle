@@ -10,8 +10,10 @@ repositories {
 }
 
 dependencies {
+    compile 'ch.qos.logback:logback-classic:1.1.2'
 	compile 'org.jdom:jdom2:2.0.5'
     compile files('libs/de.uniba.dsg.bpmnspector.common.jar')
+	
 	testCompile 'junit:junit:4.11'
 }
 

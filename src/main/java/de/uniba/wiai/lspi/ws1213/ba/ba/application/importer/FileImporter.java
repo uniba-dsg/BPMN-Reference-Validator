@@ -1,7 +1,16 @@
 package de.uniba.wiai.lspi.ws1213.ba.ba.application.importer;
 
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.ValidatorException;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.xsdvalidation.ResourceResolver;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -10,22 +19,11 @@ import org.jdom2.filter.Filters;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.located.LocatedJDOMFactory;
 import org.jdom2.util.IteratorIterable;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
-import javax.xml.XMLConstants;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
+import de.uniba.dsg.bpmnspector.common.ValidationResult;
+import de.uniba.dsg.bpmnspector.common.xsdvalidation.BpmnXsdValidator;
+import de.uniba.wiai.lspi.ws1213.ba.ba.application.ValidatorException;
 
 /**
  * Helper Class to Import all referenced BPMN, WSDL and XSD files referenced by
@@ -41,6 +39,7 @@ public class FileImporter {
 
 	private Properties language;
 	private final SAXBuilder builder;
+	private final BpmnXsdValidator bpmnXsdValidator;
 
 	/**
 	 * Constructs a new {@code FileImporter}
@@ -53,6 +52,7 @@ public class FileImporter {
 		this.language = language;
 		builder = new SAXBuilder();
 		builder.setJDOMFactory(new LocatedJDOMFactory());
+		bpmnXsdValidator = new BpmnXsdValidator();
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class FileImporter {
 		File baseFile = checkPathAndCreateFile(pathToBaseFile);
 
 		try {
-			validateFileAgainstBpmnXSD(baseFile);
+			bpmnXsdValidator.validateAgainstXsd(baseFile, new ValidationResult());
 			Document baseDoc = builder.build(baseFile);
 			List<String> processedFiles = new ArrayList<>();
 			processedFiles.add(baseFile.getAbsolutePath());
@@ -97,6 +97,9 @@ public class FileImporter {
 				return new ProcessFileSet(baseDoc, null, null);
 			}
 
+		} catch (SAXException e) {
+			String errorText = language.getProperty("validator.xsd.sax")+": "+e.getMessage();
+			throw new ValidatorException(errorText, e);
 		} catch (JDOMException e) {
 			String errorText = language.getProperty("validator.jdom") + "'"
 					+ pathToBaseFile + "'.";
@@ -106,7 +109,7 @@ public class FileImporter {
 			String errorText = language.getProperty("validator.io") + "'"
 					+ pathToBaseFile + "'.";
 			throw new ValidatorException(errorText, e);
-		}
+		} 
 
 	}
 
@@ -159,7 +162,8 @@ public class FileImporter {
 							.getAttributeValue("importType"))) {
 
 						try {
-							validateFileAgainstBpmnXSD(file);
+							
+							bpmnXsdValidator.validateAgainstXsd(file, new ValidationResult());
 							Document bpmnDoc = builder.build(file);
 							processedFiles.add(file.getAbsolutePath());
 							resolvedBpmnFiles.add(bpmnDoc);
@@ -172,7 +176,10 @@ public class FileImporter {
 							resolvedXsdFiles.addAll(processResults
 									.get(ProcessFileSet.XSD_NAMESPACE));
 
-						} catch (JDOMException e) {
+						} catch (SAXException e) {
+							String errorText = language.getProperty("validator.xsd.sax")+": "+e.getMessage();
+							throw new ValidatorException(errorText, e);
+						}catch (JDOMException e) {
 							String errorText = language
 									.getProperty("validator.jdom.imported.part1")
 									+ path
@@ -192,7 +199,7 @@ public class FileImporter {
 									+ language
 											.getProperty("validator.io.imorted.part2");
 							throw new ValidatorException(errorText, e);
-						}
+						} 
 					} else if (ProcessFileSet.WSDL_NAMESPACE.equals(element
 							.getAttributeValue("importType"))) {
 						// TODO implement import processing of WSDL interfaces
@@ -209,82 +216,4 @@ public class FileImporter {
 		return resolvedFiles;
 	}
 
-	/**
-	 * This method validates the given BPMN file against the BPMN XSDs.
-	 * 
-	 * @param file
-	 *            the file to validate
-	 * @throws ValidatorException
-	 *             if technical problems occurred or the file is not schema
-	 *             valid
-	 */
-	private void validateFileAgainstBpmnXSD(File file)
-			throws ValidatorException {
-		List<SAXParseException> XSDErrorList = new ArrayList<>();
-		try {
-			SchemaFactory schemaFactory = SchemaFactory
-					.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-			schemaFactory.setResourceResolver(new ResourceResolver());
-			Schema schema = schemaFactory
-					.newSchema(new Source[] {
-							new StreamSource(getClass().getResourceAsStream(
-									"/DC.xsd")),
-							new StreamSource(getClass().getResourceAsStream(
-									"/DI.xsd")),
-							new StreamSource(getClass().getResourceAsStream(
-									"/BPMNDI.xsd")),
-							new StreamSource(getClass().getResourceAsStream(
-									"/BPMN20.xsd")) });
-			Validator validator = schema.newValidator();
-			validator.setErrorHandler(new ValidationErrorHandler(XSDErrorList));
-			validator.validate(new StreamSource(file));
-			if (XSDErrorList.size() > 0) {
-				String xsdErrorText = language
-						.getProperty("validator.xsd.general.part1")
-						+ file.getName()
-						+ language.getProperty("validator.xsd.general.part2")
-						+ System.lineSeparator();
-				for (SAXParseException saxParseException : XSDErrorList) {
-					xsdErrorText = xsdErrorText
-							+ language.getProperty("loader.xsd.error.part1")
-							+ saxParseException.getLineNumber() + " "
-							+ language.getProperty("loader.xsd.error.part2")
-							+ saxParseException.getMessage()
-							+ System.lineSeparator();
-				}
-				throw new ValidatorException(xsdErrorText);
-			}
-		} catch (SAXException e) {
-			throw new ValidatorException(
-					language.getProperty("validator.xsd.sax") + file.getName(),
-					e);
-		} catch (IOException e) {
-			throw new ValidatorException(language.getProperty("validator.io")
-					+ file.getName(), e);
-		}
-	}
-
-	private class ValidationErrorHandler implements ErrorHandler {
-
-		List<SAXParseException> XSDErrorList = new ArrayList<>();
-
-		public ValidationErrorHandler(List<SAXParseException> XSDErrorList) {
-			this.XSDErrorList = XSDErrorList;
-		}
-
-		@Override
-		public void error(SAXParseException e) throws SAXException {
-			XSDErrorList.add(e);
-		}
-
-		@Override
-		public void fatalError(SAXParseException e) throws SAXException {
-			XSDErrorList.add(e);
-		}
-
-		@Override
-		public void warning(SAXParseException e) throws SAXException {
-			XSDErrorList.add(e);
-		}
-	}
 }
