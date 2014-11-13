@@ -23,7 +23,7 @@ public class TestBpmnFileImporter {
 	public static void setup() {
 		Properties language = new Properties();
 		try {
-			language.load(new FileInputStream(new File("resources/en.lang")));
+			language.load(new FileInputStream(new File("src/main/resources/en.lang")));
 			importer = new FileImporter(language);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -35,7 +35,7 @@ public class TestBpmnFileImporter {
 	@Test
 	public void testSingleImport() {
 		try {
-			ProcessFileSet fileSet = importer.loadAllFiles("test/tests/test-18-referenz-6-teil-2.bpmn", false);
+			ProcessFileSet fileSet = importer.loadAllFiles("src/test/resources/test-18-referenz-6-teil-2.bpmn", false);
 			assertNotNull(fileSet.getBpmnBaseFile());
 		} catch (ValidatorException e) {
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class TestBpmnFileImporter {
 	@Test
 	public void testBpmnImportChaining() {
 		try {
-			ProcessFileSet fileSet = importer.loadAllFiles("test/tests/test-import-2steps.bpmn", true);
+			ProcessFileSet fileSet = importer.loadAllFiles("src/test/resources/test-import-2steps.bpmn", true);
 			assertNotNull(fileSet.getBpmnBaseFile());
 			assertTrue(fileSet.getReferencedBpmnFiles().size()==2);
 		} catch (ValidatorException e) {
