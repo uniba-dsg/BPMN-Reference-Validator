@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.ba.application;
+package de.uniba.wiai.lspi.ws1213.ba.application;
 
 /**
  * This exception encapsulates technology specific exceptions and is thrown by general errors.

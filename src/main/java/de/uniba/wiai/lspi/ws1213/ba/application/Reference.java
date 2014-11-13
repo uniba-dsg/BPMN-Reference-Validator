@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.ba.application;
+package de.uniba.wiai.lspi.ws1213.ba.application;
 
 import java.util.ArrayList;
 import java.util.Properties;

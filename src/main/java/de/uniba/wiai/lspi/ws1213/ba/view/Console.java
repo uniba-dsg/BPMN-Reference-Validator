@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.ba.view;
+package de.uniba.wiai.lspi.ws1213.ba.view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,20 +8,20 @@ import java.util.logging.Level;
 
 import de.uniba.dsg.bpmnspector.common.ValidationResult;
 import de.uniba.dsg.bpmnspector.common.Violation;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidator;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.ValidatorException;
+import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidator;
+import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl;
+import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
 
 
 /**
  * This class is for starting the application in the console modus. Therefore it
  * uses String flags for the options of the validator and gives back print
  * lines. An example for the console call can be found here:
- * {@link de.uniba.wiai.lspi.ws1213.ba.ba.Main}.
+ * {@link de.uniba.wiai.lspi.ws1213.ba.Main}.
  * 
  * @author Andreas Vorndran
  * @version 1.0
- * @see de.uniba.wiai.lspi.ws1213.ba.ba.Main
+ * @see de.uniba.wiai.lspi.ws1213.ba.Main
  * 
  */
 public class Console {

@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.ba.application;
+package de.uniba.wiai.lspi.ws1213.ba.application;
 
 import java.util.logging.Level;
 import de.uniba.dsg.bpmnspector.common.ValidationResult;

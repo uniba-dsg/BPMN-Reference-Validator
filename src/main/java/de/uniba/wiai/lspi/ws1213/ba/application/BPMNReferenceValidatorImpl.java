@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.ba.application;
+package de.uniba.wiai.lspi.ws1213.ba.application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,9 +24,9 @@ import org.jdom2.xpath.XPathHelper;
 
 import de.uniba.dsg.bpmnspector.common.ValidationResult;
 import de.uniba.dsg.bpmnspector.common.Violation;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.importer.FileImporter;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.importer.ProcessFileSet;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.utils.ViolationMessageCreator;
+import de.uniba.wiai.lspi.ws1213.ba.application.importer.FileImporter;
+import de.uniba.wiai.lspi.ws1213.ba.application.importer.ProcessFileSet;
+import de.uniba.wiai.lspi.ws1213.ba.application.utils.ViolationMessageCreator;
 
 /**
  * The implementation of the BPMNReferenceValidator. For more information and an

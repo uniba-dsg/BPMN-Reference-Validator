@@ -1,9 +1,9 @@
-package de.uniba.wiai.lspi.ws1213.ba.ba;
+package de.uniba.wiai.lspi.ws1213.ba;
 
 import javax.swing.JFrame;
 
-import de.uniba.wiai.lspi.ws1213.ba.ba.view.Frame;
-import de.uniba.wiai.lspi.ws1213.ba.ba.view.Console;
+import de.uniba.wiai.lspi.ws1213.ba.view.Frame;
+import de.uniba.wiai.lspi.ws1213.ba.view.Console;
 
 /**
  * This class has the main method and therefore is the starting point of the
@@ -21,9 +21,9 @@ import de.uniba.wiai.lspi.ws1213.ba.ba.view.Console;
  * 
  * @author Andreas Vorndran
  * @version 1.0
- * @see de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidator
+ * @see de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidator
  * @see Console
- * @see de.uniba.wiai.lspi.ws1213.ba.ba.view.Frame
+ * @see de.uniba.wiai.lspi.ws1213.ba.view.Frame
  * 
  */
 public class Main {

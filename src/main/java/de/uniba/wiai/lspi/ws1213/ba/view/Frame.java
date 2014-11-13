@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.ba.view;
+package de.uniba.wiai.lspi.ws1213.ba.view;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -34,10 +34,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.uniba.dsg.bpmnspector.common.ValidationResult;
 import de.uniba.dsg.bpmnspector.common.Violation;
-import de.uniba.wiai.lspi.ws1213.ba.ba.Main;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidator;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.ValidatorException;
+import de.uniba.wiai.lspi.ws1213.ba.Main;
+import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidator;
+import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl;
+import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
 
 /**
  * This class starts the application from a GUI, based on this JFrame extension.

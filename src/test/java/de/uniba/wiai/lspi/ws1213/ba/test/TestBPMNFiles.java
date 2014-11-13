@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.test.test;
+package de.uniba.wiai.lspi.ws1213.ba.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import de.uniba.dsg.bpmnspector.common.ValidationResult;
 import de.uniba.dsg.bpmnspector.common.Violation;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidator;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl;
-import de.uniba.wiai.lspi.ws1213.ba.ba.application.ValidatorException;
+import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidator;
+import de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl;
+import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
 
 /**
  * This test class tests the validator with the predefined BPMN files. The
@@ -34,7 +34,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T1.
 	 * 
 	 * @throws ValidatorException
@@ -54,7 +54,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T2.
 	 * 
 	 * @throws ValidatorException
@@ -75,7 +75,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T3.
 	 * 
 	 * @throws ValidatorException
@@ -96,7 +96,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T4.
 	 * 
 	 * @throws ValidatorException
@@ -117,7 +117,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T5.
 	 * 
 	 * @throws ValidatorException
@@ -137,7 +137,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T6.
 	 * 
 	 * @throws ValidatorException
@@ -157,7 +157,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T7.
 	 * 
 	 * @throws ValidatorException
@@ -178,7 +178,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T8.
 	 * 
 	 * @throws ValidatorException
@@ -198,7 +198,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T9.
 	 * 
 	 * @throws ValidatorException
@@ -218,7 +218,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T10.
 	 * 
 	 * @throws ValidatorException
@@ -238,7 +238,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T11.
 	 * 
 	 * @throws ValidatorException
@@ -259,7 +259,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T12.
 	 * 
 	 * @throws ValidatorException
@@ -279,7 +279,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T13.
 	 * 
 	 * @throws ValidatorException
@@ -299,7 +299,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T14.
 	 * 
 	 * @throws ValidatorException
@@ -320,7 +320,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T15.
 	 * 
 	 * @throws ValidatorException
@@ -340,7 +340,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T16.
 	 * 
 	 * @throws ValidatorException
@@ -360,7 +360,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T17.
 	 * 
 	 * @throws ValidatorException
@@ -380,7 +380,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T18.
 	 * 
 	 * @throws ValidatorException
@@ -400,7 +400,7 @@ public class TestBPMNFiles {
 
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T18 using a reference to a Subfolder.
 	 * 
 	 * @throws ValidatorException
@@ -443,7 +443,7 @@ public class TestBPMNFiles {
 	
 	/**
 	 * Test method for
-	 * {@link de.uniba.wiai.lspi.ws1213.ba.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
+	 * {@link de.uniba.wiai.lspi.ws1213.ba.application.BPMNReferenceValidatorImpl#validate(java.lang.String)}
 	 * with T19.
 	 * 
 	 * @throws ValidatorException

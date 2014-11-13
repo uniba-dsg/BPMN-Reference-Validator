@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.ba.application.importer;
+package de.uniba.wiai.lspi.ws1213.ba.application.importer;
 
 import java.util.List;
 import java.util.Map;
