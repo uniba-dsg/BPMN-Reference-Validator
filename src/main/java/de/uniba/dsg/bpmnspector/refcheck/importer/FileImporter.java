@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.application.importer;
+package de.uniba.dsg.bpmnspector.refcheck.importer;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 
 import de.uniba.dsg.bpmnspector.common.ValidationResult;
 import de.uniba.dsg.bpmnspector.common.xsdvalidation.BpmnXsdValidator;
-import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
+import de.uniba.dsg.bpmnspector.refcheck.ValidatorException;
 
 /**
  * Helper Class to Import all referenced BPMN, WSDL and XSD files referenced by

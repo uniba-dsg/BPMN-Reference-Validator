@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.test;
+package de.uniba.dsg.bpmnspector.refcheck.tests;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -11,9 +11,9 @@ import java.util.Properties;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.uniba.wiai.lspi.ws1213.ba.application.ValidatorException;
-import de.uniba.wiai.lspi.ws1213.ba.application.importer.FileImporter;
-import de.uniba.wiai.lspi.ws1213.ba.application.importer.ProcessFileSet;
+import de.uniba.dsg.bpmnspector.refcheck.ValidatorException;
+import de.uniba.dsg.bpmnspector.refcheck.importer.FileImporter;
+import de.uniba.dsg.bpmnspector.refcheck.importer.ProcessFileSet;
 
 public class TestBpmnFileImporter {
 	

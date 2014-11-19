@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.application;
+package de.uniba.dsg.bpmnspector.refcheck;
 
 import java.io.File;
 import java.io.IOException;

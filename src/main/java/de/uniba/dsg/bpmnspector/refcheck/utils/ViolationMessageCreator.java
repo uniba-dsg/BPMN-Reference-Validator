@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.application.utils;
+package de.uniba.dsg.bpmnspector.refcheck.utils;
 
 import java.util.Properties;
 

@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.application;
+package de.uniba.dsg.bpmnspector.refcheck;
 
 /**
  * This exception encapsulates technology specific exceptions and is thrown by general errors.

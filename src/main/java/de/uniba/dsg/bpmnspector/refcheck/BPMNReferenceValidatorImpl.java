@@ -1,4 +1,4 @@
-package de.uniba.wiai.lspi.ws1213.ba.application;
+package de.uniba.dsg.bpmnspector.refcheck;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,9 +24,9 @@ import org.jdom2.xpath.XPathHelper;
 
 import de.uniba.dsg.bpmnspector.common.ValidationResult;
 import de.uniba.dsg.bpmnspector.common.Violation;
-import de.uniba.wiai.lspi.ws1213.ba.application.importer.FileImporter;
-import de.uniba.wiai.lspi.ws1213.ba.application.importer.ProcessFileSet;
-import de.uniba.wiai.lspi.ws1213.ba.application.utils.ViolationMessageCreator;
+import de.uniba.dsg.bpmnspector.refcheck.importer.FileImporter;
+import de.uniba.dsg.bpmnspector.refcheck.importer.ProcessFileSet;
+import de.uniba.dsg.bpmnspector.refcheck.utils.ViolationMessageCreator;
 
 /**
  * The implementation of the BPMNReferenceValidator. For more information and an
@@ -538,8 +538,8 @@ public class BPMNReferenceValidatorImpl implements BPMNReferenceValidator {
 	 *            the elements of the root file (= <code>bpmnFile</code>)
 	 * @param violationList
 	 *            the violation list for adding found violations
-	 * @param currentName
-	 *            the name of the current element
+	 * @param currentElement
+	 *            the current element
 	 * @param line
 	 *            the line of the reference in the root file for the violation
 	 *            message
