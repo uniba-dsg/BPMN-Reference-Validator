@@ -1,6 +1,10 @@
 BPMN Reference validation
 ===
 
+-----
+### Note: Project is now part of [uniba-dsg/BPMNspector](https://github.com/uniba-dsg/BPMNspector) - and will be no further maintained here
+-----
+
 Tool to check all references in BPMN 2.0 process files:
 
 - Points the reference to an existing element?
